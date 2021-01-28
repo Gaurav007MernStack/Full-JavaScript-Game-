@@ -4,8 +4,8 @@ const startScreen = document.querySelector('.startScreen');
 const gameArea = document.querySelector('.gameArea');
 
 startScreen.addEventListener('click', start);
-
 let player = { speed : 5 , score : 0} ;
+
 
 let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
 
@@ -51,16 +51,24 @@ function moveLines(){
 function endGame(){
     player.start = false;
     startScreen.classList.remove('hide');
-    startScreen.innerHTML = "Game Over <br> Your final Score is " + player.score + " <br> Press here to Restart the Game.";
+    startScreen.innerHTML = "Game Over <br> Your final Score is " + (ps +5) + " <br> Press here to Restart the Game.";
+   
+    
 }
+
 
 function moveEnemy(car){
     let enemy = document.querySelectorAll('.enemy');
 
     enemy.forEach(function(item){
-
+        if(player.score++  > 2000){
+            player.speed = 6;
+            item.y += player.speed;
+        }
+        
         if(isCollide(car, item)){
             console.log("Boom HIT");
+            console.log(player.speed);
             endGame();
         }
 
@@ -79,6 +87,7 @@ function gamePlay(){
     let car = document.querySelector('.car');
     let road = gameArea.getBoundingClientRect();
     //console.log(road);
+    
     if(player.start){
 
         moveLines();
@@ -95,7 +104,7 @@ function gamePlay(){
         window.requestAnimationFrame(gamePlay);
         console.log(player.score++);
         player.score++;
-        let ps = player.score -2;
+        ps = player.score ;
         score.innerText = "Score: " + ps;
     }
 
